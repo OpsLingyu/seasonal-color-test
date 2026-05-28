@@ -507,6 +507,126 @@ body {
 
 .score-val { font-size: 11px; color: var(--text2); width: 28px; text-align: right; }
 
+/* ── TABS ── */
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  gap: 0;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 10px 20px 10px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover { color: var(--text); }
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* outfit grid */
+.outfit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.outfit-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+.outfit-cat {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text2);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.outfit-val {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.outfit-note {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.85;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent2);
+  padding: 12px 14px;
+  margin-top: 4px;
+}
+
+/* beauty grid */
+.beauty-block {
+  margin-bottom: 18px;
+}
+
+.beauty-block-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent2);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.beauty-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.beauty-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+.beauty-cat {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text2);
+  margin-bottom: 5px;
+}
+
+.beauty-val {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.beauty-note {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.85;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent2);
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+
 .disclaimer {
   border-top: 1px solid var(--border);
   margin-top: 8px;
@@ -806,172 +926,316 @@ const Q = [
 // ── 12型结果定义 ──
 const TYPES = {
   spring_clear: {
-    name: "亮春型",
-    en: "Bright Spring",
-    ko: "봄 비비드",
+    name: "亮春型", en: "Bright Spring", ko: "봄 비비드",
     desc: "你是最明亮活力的暖调代表！肤色清透有光泽，发色与肤色形成适中对比，整体散发干净而充满活力的氛围。高饱和度的鲜艳暖色调最能激活你的气色，让你看起来光彩照人、精力充沛。避免沉闷的暗色或过度柔和的粉调色彩。",
     palette: ["#FF8C42","#F4C842","#7BC67E","#F4845F","#FFD166"],
-    hdr: "linear-gradient(135deg,#f9c06a 0%,#f4845f 60%,#e8402a 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#f9c06a 0%,#f4845f 60%,#e8402a 100%)", tc: "#fff",
     best: ["珊瑚橙","暖柠黄","苹果绿","桃粉","象牙白","暖红"],
     avoid: ["冷灰紫","暗酒红","黑色","冰蓝"],
-    makeup: { lip:"珊瑚橙·暖红", blush:"橙色腮红", shadow:"暖棕·珊瑚", base:"象牙粉底" },
-    celebs: ["IU (早期)","朴彩英","蔡徐坤"],
-    dim: {warm:7, light:4, clear:5, soft:1, cool:0, deep:1}
+    celebs: ["IU（早期）","朴彩英","蔡徐坤","NCT 태용（暖调造型）"],
+    dim: {warm:7, light:4, clear:5, soft:1, cool:0, deep:1},
+    outfit: {
+      style: "活力休闲 / 清新运动风 / 度假感",
+      top: "珊瑚橙卫衣、白底暖色印花T恤、杏色针织",
+      bottom: "象牙白阔腿裤、浅卡其工装裤、暖米色百褶裙",
+      outer: "橙调格纹外套、浅驼色风衣、暖白棒球夹克",
+      acc: "黄金系首饰、橙棕皮带、暖色帆布包",
+      avoid: "全身冷灰色搭配 / 深酒红系 / 过深的黑色为主的造型",
+      tip: "最适合撞色搭配，比如珊瑚橙＋草绿、杏色＋暖黄，颜色活泼但底调要统一在暖色系内。纯黑色单品作为点缀虽然不够理想，但可以用深棕替代。"
+    },
+    beauty: {
+      base: "象牙色或暖米调粉底，避免冷白或粉调底妆，整体呈现健康自然感",
+      blush: "橙调腮红打在颧骨偏高处，营造晒后感；避免粉调或玫瑰调",
+      eye: "暖棕、铜棕、珊瑚色眼影；眼线用棕色或暖深棕代替黑色，更融合",
+      lip: "珊瑚橙、暖正红、橘棕色系；哑光或微光质地均可",
+      tip: "整体妆感以「活力自然」为方向，底妆薄透、重点在腮红和唇色。深色眼妆会压制明亮气质，建议以暖棕色扫淡晕染为主。"
+    }
   },
   spring_warm: {
-    name: "暖春型",
-    en: "Warm Spring",
-    ko: "봄 라이트웜",
+    name: "暖春型", en: "Warm Spring", ko: "봄 라이트웜",
     desc: "你是最纯粹的暖调型，皮肤、发色、眼睛都透着温暖而自然的光泽。暖调的中等明度色彩最适合你，尤其是带有橙调、棕调的自然色系，能让你呈现出健康明媚的气质。过于鲜艳或过于清冷的颜色都会让你显得不够精神。",
     palette: ["#E8A87C","#C8703A","#D4A96A","#E8C84A","#F4845F"],
-    hdr: "linear-gradient(135deg,#e8c06a 0%,#c8703a 60%,#a05020 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#e8c06a 0%,#c8703a 60%,#a05020 100%)", tc: "#fff",
     best: ["驼色","南瓜橙","暖棕","芥末黄","杏色","珊瑚橙"],
     avoid: ["冷粉","冷紫","冰白","深海军蓝"],
-    makeup: { lip:"暖橙棕·裸橙", blush:"橙棕腮红", shadow:"暖大地色", base:"象牙/暖调粉底" },
-    celebs: ["全智贤","Lisa (某些造型)","Stella Jang"],
-    dim: {warm:8, light:3, clear:3, soft:2, cool:0, deep:2}
+    celebs: ["全智贤","Stella Jang","李栋旭（暖色造型）"],
+    dim: {warm:8, light:3, clear:3, soft:2, cool:0, deep:2},
+    outfit: {
+      style: "自然休闲 / 复古美式 / 户外感",
+      top: "驼色或焦糖色针织、暖橙色衬衫、牛仔衬衫（暖蓝调）",
+      bottom: "卡其工装裤、暖棕皮革感长裤、米白牛仔",
+      outer: "驼色大衣、暖棕皮夹克、橙调格纹衬衫式外套",
+      acc: "黄金·玫瑰金首饰、棕色真皮包、焦糖色腰带",
+      avoid: "冷灰色系从头到脚 / 纯正宝蓝 / 冷白衬衫紧贴脸部",
+      tip: "牛仔是这个类型的好朋友，但要选暖调蓝色牛仔（偏黄的旧化感）而非冷调蓝。搭配大地色系时可以大胆叠色，驼色＋棕＋杏是经典组合。"
+    },
+    beauty: {
+      base: "暖米或象牙调粉底，SPF产品注意避免添加蓝光防护导致的冷白感",
+      blush: "橙棕或蜜桃色腮红，轻扫颧骨；暖调古铜粉也非常适合",
+      eye: "大地棕、暖金、橙棕；可以尝试铜色眼线，避免灰色眼影",
+      lip: "暖橙棕、裸橙、砖红；避免蓝调玫红或冷粉",
+      tip: "这个类型非常适合「裸妆感」，用接近唇色的暖裸色唇妆加轻薄底妆，整体自然有气色。古铜感晒伤妆也非常加分。"
+    }
   },
   spring_light: {
-    name: "浅春型",
-    en: "Light Spring",
-    ko: "봄 라이트",
+    name: "浅春型", en: "Light Spring", ko: "봄 라이트",
     desc: "你是春季中最轻盈柔和的类型，肤色白皙明亮，发色较浅，整体气质甜美清新。浅暖调的柔和颜色最适合你，颜色饱和度不宜太高，粉嫩的暖调最能衬托你白里透红的肤色。深色和浓艳色会使你显得疲惫或突兀。",
     palette: ["#FFD6B8","#F9C0A8","#FADC8C","#A8D8A8","#F9D0B0"],
-    hdr: "linear-gradient(135deg,#fce4c8 0%,#f9c0a8 60%,#f4a080 100%)",
-    tc: "#7a4a30",
+    hdr: "linear-gradient(135deg,#fce4c8 0%,#f9c0a8 60%,#f4a080 100%)", tc: "#7a4a30",
     best: ["蜜桃粉","浅杏色","嫩鹅黄","浅草绿","米白","粉橙"],
     avoid: ["浓重大地棕","黑色","深枣红","冷灰"],
-    makeup: { lip:"蜜桃粉·浅珊瑚", blush:"蜜桃腮红", shadow:"浅暖棕·粉橙", base:"浅象牙粉底" },
-    celebs: ["金泰妍","少女时代时期造型","OH MY GIRL ARIN"],
-    dim: {warm:5, light:7, clear:2, soft:3, cool:0, deep:0}
+    celebs: ["金泰妍","OH MY GIRL ARIN","SHINee 珉豪（淡色系造型）"],
+    dim: {warm:5, light:7, clear:2, soft:3, cool:0, deep:0},
+    outfit: {
+      style: "清新日系 / 奶油系穿搭 / 轻甜通勤",
+      top: "奶白色蕾丝上衣、蜜桃粉针织、浅杏色条纹衬衫",
+      bottom: "米白阔腿裤、浅卡其A字裙、嫩黄色休闲裤",
+      outer: "浅驼色短款外套、奶白色风衣、粉橙薄针织开衫",
+      acc: "玫瑰金首饰、米色帆布包、浅棕编织单品",
+      avoid: "全黑造型 / 深酒红大面积色块 / 浓重格纹（颜色太深会显憔悴）",
+      tip: "「奶油色」是你的核心词，整体用象牙白＋浅杏＋蜜桃粉构建色系，加入一点嫩草绿或鹅黄做跳色，清新不腻。颜色越轻盈越好，用材质（蕾丝、针织、雪纺）增加层次感。"
+    },
+    beauty: {
+      base: "浅象牙或自然裸感粉底，遮瑕不宜过厚，保留自然通透感",
+      blush: "蜜桃色或浅珊瑚腮红，范围略大打造自然红润感",
+      eye: "浅暖棕、粉橙色、浅金色；眼线用棕色，整体保持轻盈",
+      lip: "蜜桃粉、浅珊瑚、奶茶橙；带有微光质地更加分",
+      tip: "这个类型妆感以「透亮水润」为核心，厚重哑光妆会压垮气质。高光打在鼻梁和泪沟，让整体更立体。若想尝试深色唇妆，可以用暖棕点在唇中晕开，而非直接满涂深色。"
+    }
   },
   summer_light: {
-    name: "浅夏型",
-    en: "Light Summer",
-    ko: "여름 라이트",
+    name: "浅夏型", en: "Light Summer", ko: "여름 라이트",
     desc: "你是夏季中最清浅的类型，皮肤白皙细腻，发色较浅，整体呈现出清透柔和的气质。浅冷调或中性浅色调最适合你，颜色不宜太深或太浓艳，粉雾感的浅色系能让你看起来格外清新脱俗，深色和浓郁色会让你显得憔悴。",
     palette: ["#E8D5E8","#D4C0D8","#B8D0E0","#C8D8E8","#E0D0E8"],
-    hdr: "linear-gradient(135deg,#e8d8f0 0%,#c8d0e8 60%,#a8b8d8 100%)",
-    tc: "#3a3050",
+    hdr: "linear-gradient(135deg,#e8d8f0 0%,#c8d0e8 60%,#a8b8d8 100%)", tc: "#3a3050",
     best: ["淡粉紫","浅薰衣草","粉蓝灰","浅雾灰","樱花粉","轻柔白"],
     avoid: ["橙色","暖黄","深棕","纯黑"],
-    makeup: { lip:"裸粉·浅玫瑰", blush:"粉色腮红", shadow:"浅紫灰·裸粉", base:"冷调浅粉底" },
-    celebs: ["BLACKPINK JISOO","宋慧乔（素颜感）","金智秀"],
-    dim: {cool:5, light:7, soft:4, clear:1, warm:0, deep:0}
+    celebs: ["BLACKPINK JISOO","宋慧乔（素颜感）","EXO 灿烈（浅色系造型）"],
+    dim: {cool:5, light:7, soft:4, clear:1, warm:0, deep:0},
+    outfit: {
+      style: "清透少女感 / 法式浪漫 / 冷淡极简",
+      top: "浅薰衣草色衬衫、粉蓝灰针织、奶白雪纺上衣",
+      bottom: "浅灰蓝阔腿裤、粉紫色百褶裙、冷白直筒裤",
+      outer: "浅灰蓝风衣、薰衣草色针织开衫、冷白西装",
+      acc: "银色或白金首饰、灰蓝色包包、珍珠系配饰",
+      avoid: "暖橙驼色系 / 深棕色皮质单品 / 高饱和暖色大面积出现",
+      tip: "浅夏最怕被暖色「污染」——哪怕一件驼色外套也会让整体造型显得不和谐。坚持冷调浅色系，用材质（雪纺、丝感、薄针织）营造层次，简单的颜色组合反而最出效果。"
+    },
+    beauty: {
+      base: "冷调浅粉底，亮度适中，不追求过白；打造均匀清透底妆",
+      blush: "浅玫瑰粉或冷粉调腮红，轻薄晕染；避免橙调或桃调",
+      eye: "浅紫灰、裸粉、珠光淡粉；睫毛膏选黑棕色，整体保持轻盈",
+      lip: "裸粉、浅玫瑰、冷调浅裸色；水润质地最佳",
+      tip: "浅夏妆感关键词是「薄」——薄底妆、薄腮红、薄唇色，整体如同天然好气色。如果想有存在感，可以在眼睛上做功夫，用冷调裸粉色打底加珠光卧蚕，而非加深整体妆容。"
+    }
   },
   summer_soft: {
-    name: "柔夏型",
-    en: "Soft Summer",
-    ko: "여름 뮤트",
+    name: "柔夏型", en: "Soft Summer", ko: "여름 뮤트",
     desc: "你是最典型的莫兰迪色系代言人，皮肤底色偏冷，整体气质柔雾、朦胧、文艺。低饱和度的灰调冷色系最适合你，任何颜色加入一点「灰」都能让你焕发独特的知性美，避免高饱和度的鲜艳色，那会让你显得气色差。",
     palette: ["#B8A8B8","#A89898","#9898A8","#B8A898","#A8A8B8"],
-    hdr: "linear-gradient(135deg,#c8b8c8 0%,#a8a0b8 60%,#9090a8 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#c8b8c8 0%,#a8a0b8 60%,#9090a8 100%)", tc: "#fff",
     best: ["莫兰迪粉","雾蓝灰","哑灰紫","浅玫灰","灰绿","灰蓝"],
     avoid: ["荧光色","纯橙","亮黄","鲜艳正红"],
-    makeup: { lip:"豆沙裸粉·玫瑰棕", blush:"玫瑰灰腮红", shadow:"紫灰·冷棕", base:"自然冷调粉底" },
-    celebs: ["裴秀智","IU（近年成熟风）","孙艺珍"],
-    dim: {cool:5, soft:7, light:3, clear:0, warm:0, deep:2}
+    celebs: ["裴秀智","孙艺珍","IU（近年风格）","SHINee KEY（柔色系造型）"],
+    dim: {cool:5, soft:7, light:3, clear:0, warm:0, deep:2},
+    outfit: {
+      style: "莫兰迪系 / 文艺复古 / 知性通勤",
+      top: "灰玫粉针织、雾蓝灰衬衫、哑光冷灰卫衣",
+      bottom: "灰紫色直筒裤、蓝灰系牛仔、灰绿色宽腿裤",
+      outer: "灰蓝色大衣、雾感玫瑰色风衣、哑光冷灰西装",
+      acc: "银色磨砂质感首饰、灰调皮包、冷棕色腰带",
+      avoid: "高饱和度任何颜色（包括暖色和冷色的鲜艳版本）/ 全身亮色",
+      tip: "柔夏最重要的搭配法则是「统一灰度」——所有单品都需要带有灰调，鲜艳的颜色即使是冷色调也会让整体失衡。用不同深浅的莫兰迪色叠加，反而能创造出非常高级的层次感。"
+    },
+    beauty: {
+      base: "自然冷调粉底，质地以半哑光为主，避免过亮的提亮感",
+      blush: "玫瑰灰或冷棕调腮红，轻薄扫于颧骨；避免橙色或亮粉色",
+      eye: "紫灰、冷棕、烟灰色眼影；烟熏感（需控制饱和度）非常适合",
+      lip: "豆沙裸粉、玫瑰棕、冷调裸色；哑光质地最佳",
+      tip: "柔夏妆感的核心是「哑光雾感」，所有产品尽量选哑光或缎光质地，避免强珠光。这个类型非常适合「哑光大地色烟熏眼」配合裸唇色的组合，知性且有层次。"
+    }
   },
   summer_cool: {
-    name: "冷夏型",
-    en: "Cool Summer",
-    ko: "여름 쿨",
+    name: "冷夏型", en: "Cool Summer", ko: "여름 쿨",
     desc: "你是夏季中冷调最纯粹的类型，皮肤底色偏冷且有一定清透感，气质清冷、知性、略带距离感。纯正的冷调中高饱和度色彩最能体现你的气质，尤其是蓝紫系、冷粉系，颜色比柔夏更清晰有轮廓。避免暖调色彩，那会让你显得暗沉。",
     palette: ["#8FA8C8","#9888C0","#C888A8","#7898C8","#A888B8"],
-    hdr: "linear-gradient(135deg,#a8c0e0 0%,#9888c0 60%,#7868a8 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#a8c0e0 0%,#9888c0 60%,#7868a8 100%)", tc: "#fff",
     best: ["冰蓝","玫瑰紫","冷粉","薄荷绿","冷白","中蓝"],
     avoid: ["橙色","驼色","暖棕","芥末黄"],
-    makeup: { lip:"冷粉·玫瑰红", blush:"冷玫瑰腮红", shadow:"冷紫·冰蓝灰", base:"冷调粉底" },
-    celebs: ["金智妮（BLACKPINK）","TWICE 娜琏","Karina"],
-    dim: {cool:7, soft:3, clear:4, light:2, warm:0, deep:2}
+    celebs: ["金智妮（BLACKPINK）","TWICE 娜琏","Karina","Woo Dohwan（冷色系造型）"],
+    dim: {cool:7, soft:3, clear:4, light:2, warm:0, deep:2},
+    outfit: {
+      style: "冷淡知性 / 清冷学院风 / 简约都市",
+      top: "冰蓝色衬衫、冷紫色针织、白底冷调印花T",
+      bottom: "冷灰蓝直筒裤、深蓝牛仔（冷调）、薰衣草色半裙",
+      outer: "冷白西装、冰蓝色风衣、中蓝色外套",
+      acc: "银色精致首饰、冷灰皮包、冷蓝色帆布包",
+      avoid: "驼色·棕色系任何单品 / 暖白色（偏黄的白）/ 橙调牛仔",
+      tip: "冷夏可以比柔夏用更清晰的颜色，中等饱和度的蓝紫色系是主场。注意白色的选择——暖白（象牙白）会让整体发黄，要选冷白或带蓝光的白色单品。"
+    },
+    beauty: {
+      base: "冷调粉底，色号偏粉或偏蓝白；避免所有暖调粉底",
+      blush: "冷玫瑰或冷粉调腮红；避免任何带橙或桃色调的产品",
+      eye: "冷紫、冰蓝灰、冷棕；眼线可用黑色增加清晰感",
+      lip: "冷粉、玫瑰红、冷调正红；避免橙调口红",
+      tip: "冷夏可以比柔夏妆容更有轮廓感，眼线可以画得更清晰，唇色可以更饱和。整体以「冷色对比」为方向，清澈干净的妆感胜过浓重烟熏。"
+    }
   },
   autumn_warm: {
-    name: "暖秋型",
-    en: "Warm Autumn",
-    ko: "가을 웜",
+    name: "暖秋型", en: "Warm Autumn", ko: "가을 웜",
     desc: "你是最纯粹的秋日暖调型，皮肤底色暖而饱满，整体气质温暖、自然、成熟。中等饱和度的暖调大地色系最适合你，橙棕、砖红、芥末黄都是你的主场，穿上这些颜色你会呈现出温润优雅的气质，过于清冷或过于明亮的颜色会让你显得突兀。",
     palette: ["#C8703A","#B8502A","#D4A050","#8A6030","#C04830"],
-    hdr: "linear-gradient(135deg,#d4a050 0%,#c8703a 60%,#a04020 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#d4a050 0%,#c8703a 60%,#a04020 100%)", tc: "#fff",
     best: ["砖红","芥末黄","深橙","暖棕","橄榄绿","驼色"],
     avoid: ["冷粉","冷紫","冰蓝","亮白"],
-    makeup: { lip:"暖橙棕·砖红", blush:"橙棕腮红", shadow:"大地暖棕", base:"暖调粉底" },
-    celebs: ["全智贤","朴信惠","Son Ye-jin"],
-    dim: {warm:8, deep:4, soft:3, clear:0, cool:0, light:1}
+    celebs: ["全智贤","朴信惠","孙艺珍（暖调造型）","朴宝剑（大地色系造型）"],
+    dim: {warm:8, deep:4, soft:3, clear:0, cool:0, light:1},
+    outfit: {
+      style: "大地色系 / 复古美式 / 成熟自然风",
+      top: "砖红色衬衫、芥末黄针织、焦糖色卫衣",
+      bottom: "卡其工装裤、暖棕皮革感长裤、橄榄绿直筒裤",
+      outer: "驼色大衣、棕色皮夹克、暖橙格纹外套",
+      acc: "黄金或玫瑰金首饰、棕色真皮皮带和包、木纹感配饰",
+      avoid: "冷灰色系 / 冷白衬衫 / 冷调蓝紫色",
+      tip: "暖秋是大地色穿搭最自如的类型，建议以「深浅暖色叠加」为核心逻辑：驼色外套＋砖红内搭＋卡其裤，三种暖调颜色叠穿也不会显乱。牛仔要选偏黄偏旧的暖调色调。"
+    },
+    beauty: {
+      base: "暖调粉底，选偏黄或偏橙底调，不要冷白或粉调色号",
+      blush: "橙棕色调腮红，位置偏高偏后；可用古铜粉代替腮红",
+      eye: "暖棕、橄榄棕、铜金色眼影；避免灰色、冷棕系",
+      lip: "暖橙棕、砖红、焦糖色；避免冷调玫红或蓝调正红",
+      tip: "暖秋妆感以「温暖大地感」为方向，古铜晒伤妆非常适合。底妆可以略带哑光质感，搭配暖棕色眼线和砖红唇色，整体呈现成熟有质感的气质。"
+    }
   },
   autumn_deep: {
-    name: "深秋型",
-    en: "Deep Autumn",
-    ko: "가을 딥",
+    name: "深秋型", en: "Deep Autumn", ko: "가을 딥",
     desc: "你是秋季中最深邃、最有分量感的类型，肤色偏深暖，发色深棕，整体气质沉稳、神秘、极具存在感。深暖色调是你的强项，深棕、深酒红、暗橄榄绿都能让你展现出令人印象深刻的气场，浅色和冷色都会让你显得无精打采。",
     palette: ["#6B3010","#8B4020","#A05828","#503020","#7A3838"],
-    hdr: "linear-gradient(135deg,#a05828 0%,#6b3010 60%,#402010 100%)",
-    tc: "#f0d0b0",
+    hdr: "linear-gradient(135deg,#a05828 0%,#6b3010 60%,#402010 100%)", tc: "#f0d0b0",
     best: ["深棕","暗酒红","深橄榄","墨绿","咖啡棕","深砖红"],
     avoid: ["浅粉","冷紫","亮白","荧光色"],
-    makeup: { lip:"深枣红·暗橙棕", blush:"深棕腮红", shadow:"深棕·暗铜", base:"深暖调粉底" },
-    celebs: ["Han Ye-seul","金泰嬉","某些造型的崔智宇"],
-    dim: {warm:7, deep:8, soft:2, clear:0, cool:0, light:0}
+    celebs: ["Han Ye-seul","金泰嬉","朱智勋（深色系造型）"],
+    dim: {warm:7, deep:8, soft:2, clear:0, cool:0, light:0},
+    outfit: {
+      style: "复古深色系 / 高级感皮革风 / 沉稳都市",
+      top: "深酒红针织、咖啡棕皮质衬衫、暗橄榄军绿色上衣",
+      bottom: "深棕皮革感长裤、墨绿色工装裤、暗枣红直筒裤",
+      outer: "深棕皮夹克、酒红大衣、暗橄榄绿军装外套",
+      acc: "黄铜色或哑光金首饰、深棕真皮包、暗铜色腰带",
+      avoid: "浅色系特别是粉嫩色 / 冷白 / 冷调蓝紫全身造型",
+      tip: "深秋越深越好看，颜色可以大胆用到最深。深棕＋酒红＋墨绿三色叠穿是经典组合，整体有层次且气场强大。如果觉得太暗可以用暗金色配饰提亮，而非换浅色单品。"
+    },
+    beauty: {
+      base: "深暖调粉底，可以比实际肤色略深以增加气场感，避免提白",
+      blush: "深棕橙或棕玫色腮红，轻扫颧骨位置；过于亮粉会与整体不协调",
+      eye: "深棕、暗铜、暗橄榄色眼影；可以尝试烟熏感但用暖色系完成",
+      lip: "深枣红、暗橙棕、深砖红；哑光质地为主",
+      tip: "深秋妆容可以比其他类型更浓郁、更有存在感。暖调烟熏眼配合深色唇妆是最加分组合，但注意保持暖调统一——所有产品都在暖棕/酒红/铜金范围内。"
+    }
   },
   autumn_soft: {
-    name: "柔秋型",
-    en: "Soft Autumn",
-    ko: "가을 뮤트",
+    name: "柔秋型", en: "Soft Autumn", ko: "가을 뮤트",
     desc: "你是秋日里最柔和朦胧的类型，皮肤暖调但略带雾感，气质温柔、复古、低调优雅。哑光低饱和度的暖调色彩是你的专属，尤其是带有灰调的暖色，如暖杏灰、浅棕、暖橄榄，能展现你独特的复古文艺气质，避免高饱和鲜艳色。",
     palette: ["#C4A080","#A88868","#B89878","#9A8060","#C8B090"],
-    hdr: "linear-gradient(135deg,#c8b090 0%,#a88060 60%,#806040 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#c8b090 0%,#a88060 60%,#806040 100%)", tc: "#fff",
     best: ["杏色","暖米","浅棕","暖橄榄","驼色","暖灰"],
     avoid: ["荧光色","冷紫","亮白","纯黑"],
-    makeup: { lip:"裸橙·暖杏棕", blush:"暖裸色腮红", shadow:"浅暖棕·哑光金", base:"中暖调粉底" },
-    celebs: ["Song Hye-kyo（暖调造型）","韩素希","朴敏英"],
-    dim: {warm:6, soft:6, deep:2, clear:0, cool:0, light:2}
+    celebs: ["宋慧乔（暖调造型）","韩素希","朴敏英","孔刘（暖色系造型）"],
+    dim: {warm:6, soft:6, deep:2, clear:0, cool:0, light:2},
+    outfit: {
+      style: "复古文艺 / 低调哑光系 / 法式慵懒",
+      top: "杏色或暖米针织、浅棕条纹衬衫、暖橄榄色T恤",
+      bottom: "驼色阔腿裤、暖灰色直筒裤、棕橄榄绿半裙",
+      outer: "浅驼色针织大衣、暖米色风衣、暖棕格纹外套",
+      acc: "哑光玫瑰金或黄铜首饰、浅棕编织包、麂皮质感配件",
+      avoid: "鲜艳颜色（即使是暖色的高饱和版本）/ 冷白 / 纯黑大面积",
+      tip: "柔秋与柔夏相似但底调截然相反，所有单品选暖调低饱和版本。驼色、杏色、暖米是核心色，可以用麂皮、亚麻、粗棒针等材质增加复古质感，避免亮面材料。"
+    },
+    beauty: {
+      base: "中暖调粉底，质地以哑光或缎光为主，避免强光泽感",
+      blush: "暖裸色或浅橙棕腮红，轻薄扫于颧骨；避免亮粉或冷调腮红",
+      eye: "浅暖棕、哑光金、暖杏色眼影；保持低饱和度和哑光质地",
+      lip: "裸橙、暖杏棕、哑光裸色系；哑光质地是点睛",
+      tip: "柔秋妆感的关键是「哑光暖裸」——从底妆到唇色全部选哑光质地，颜色统一在暖杏棕调内。这个类型做「无妆感妆容」效果极佳，整体呈现出像天生好气色的裸妆质感。"
+    }
   },
   winter_deep: {
-    name: "深冬型",
-    en: "Deep Winter",
-    ko: "겨울 딥",
+    name: "深冬型", en: "Deep Winter", ko: "겨울 딥",
     desc: "你是最深邃凌厉的冬季型，皮肤白皙或中性但对比度极高，眼神深邃清晰，整体气场强大。深而纯正的冷色调最适合你，纯黑、深海军蓝、深紫、酒红都是你的主场，能最大化你的气场与高级感，浅色和暖色会使你失去光彩。",
     palette: ["#1A1A2E","#2D3561","#4A1028","#1A3060","#0A0A18"],
-    hdr: "linear-gradient(135deg,#2d3561 0%,#1a1a2e 60%,#0a0a18 100%)",
-    tc: "#c0c8e8",
+    hdr: "linear-gradient(135deg,#2d3561 0%,#1a1a2e 60%,#0a0a18 100%)", tc: "#c0c8e8",
     best: ["纯黑","深海军蓝","深紫","酒红","深宝蓝","炭灰"],
     avoid: ["米白","橙色","大地棕","粉嫩色"],
-    makeup: { lip:"深枣红·勃艮第", blush:"少量深玫瑰", shadow:"深灰·黑棕", base:"冷调粉底" },
-    celebs: ["BLACKPINK JENNIE","张元英","金智妮（深色造型）"],
-    dim: {cool:7, deep:8, clear:4, soft:0, warm:0, light:0}
+    celebs: ["BLACKPINK JENNIE","张元英","李钟硕（深色系造型）","朱智勋"],
+    dim: {cool:7, deep:8, clear:4, soft:0, warm:0, light:0},
+    outfit: {
+      style: "高级黑色系 / 冷调极简 / 都市锐利感",
+      top: "纯黑精裁衬衫、深海军蓝针织、深宝蓝色上衣",
+      bottom: "黑色直筒裤、深炭灰西裤、深宝蓝色牛仔",
+      outer: "黑色大衣、深海军蓝西装、深紫色外套",
+      acc: "银色精致首饰、黑色皮质包、深蓝或黑色腰带",
+      avoid: "米白·驼色 / 暖棕系皮革 / 任何粉嫩或亮暖色",
+      tip: "深冬是所有类型里最适合「全黑造型」的，黑色不仅不显沉，反而能最大化气场。如果想加颜色，用深宝蓝或深紫做单色替换，避免把暖色带入造型。银色配饰是比黄金更好的选择。"
+    },
+    beauty: {
+      base: "冷调粉底，可略偏白提亮，突出高对比度；避免暖调底妆",
+      blush: "极少量或不打腮红；若需要，用深冷玫瑰色轻扫，避免橙粉色",
+      eye: "深灰、黑棕、深冷紫眼影；眼线黑色拉长，烟熏感非常适合",
+      lip: "深枣红、勃艮第、深冷玫红；哑光质地最有气场",
+      tip: "深冬妆容以「对比度」取胜——底妆偏白、眼妆偏深、唇色偏深，形成强烈的深浅反差。这个类型非常适合「红唇黑眼」的经典高级感妆容，是少数能驾驭深色唇妆而不显老气的类型。"
+    }
   },
   winter_cool: {
-    name: "冷冬型",
-    en: "Cool Winter",
-    ko: "겨울 쿨",
+    name: "冷冬型", en: "Cool Winter", ko: "겨울 쿨",
     desc: "你是最纯粹的冷调代表，皮肤底色偏冷，气质清冷、精致、高级。纯正冷调色彩是你的主场，蓝、紫、粉，甚至黑白对比，都能让你散发无懈可击的气场。所有暖调颜色都会让你显得暗沉无光，是需要最严格回避暖色的类型。",
     palette: ["#3A60A8","#6850A8","#2A4878","#A83060","#485090"],
-    hdr: "linear-gradient(135deg,#6050a8 0%,#3a4898 60%,#2030a8 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#6050a8 0%,#3a4898 60%,#2030a8 100%)", tc: "#fff",
     best: ["宝蓝","冷紫","冰白","冷红","银灰","冷黑"],
     avoid: ["一切橙色","驼色","芥末黄","大地棕"],
-    makeup: { lip:"正红·冷玫红", blush:"冷玫瑰腮红", shadow:"冰蓝·冷紫灰", base:"冷调白皙粉底" },
-    celebs: ["Karina (aespa)","TWICE 娜琏","IVE 张元英"],
-    dim: {cool:8, clear:5, deep:3, soft:1, warm:0, light:2}
+    celebs: ["Karina（aespa）","TWICE 娜琏","IVE 张元英","车银优（冷色造型）"],
+    dim: {cool:8, clear:5, deep:3, soft:1, warm:0, light:2},
+    outfit: {
+      style: "冷调高级感 / 未来极简 / 冰雪气质",
+      top: "冰白色精裁衬衫、宝蓝色针织、冷紫色上衣",
+      bottom: "冷灰西裤、冰白阔腿裤、宝蓝色直筒裤",
+      outer: "银灰色西装、冷白大衣、冰蓝色外套",
+      acc: "银色·白金首饰、冷灰皮包、不锈钢质感配饰",
+      avoid: "一切暖调色（橙、黄、驼、棕）/ 暖白色 / 玫瑰金首饰",
+      tip: "冷冬需要最严格的冷暖把控——哪怕一个玫瑰金戒指都可能让整体感觉「暖」掉。整体造型以冷白＋宝蓝＋银灰为核心色，干净利落的剪裁比复杂装饰更适合这个气质。"
+    },
+    beauty: {
+      base: "冷调白皙粉底，追求清透感；可使用带蓝光的提亮产品",
+      blush: "冷玫瑰色腮红，极轻薄；位置偏高，打造清冷感而非红润感",
+      eye: "冰蓝灰、冷紫、银色眼影；眼线黑色，可拉长眼尾",
+      lip: "正红（冷调）、冷玫红、冰粉色；避免所有橙调口红",
+      tip: "冷冬妆容最适合「清冽感」——底妆清透白皙，腮红极少，眼妆和唇妆选择冷调纯色。「冷红唇＋冰白底妆」是这个类型的经典搭配，锐利而高级。"
+    }
   },
   winter_bright: {
-    name: "亮冬型",
-    en: "Bright Winter",
-    ko: "겨울 비비드",
+    name: "亮冬型", en: "Bright Winter", ko: "겨울 비비드",
     desc: "你是冬季中明度最高、最有光泽感的类型，皮肤偏白且清透，眼神清晰明亮，整体散发出一种干净而锐利的光彩。高饱和度的纯正冷色最能激活你，纯白·宝蓝·正红·亮紫等颜色让你看起来光芒四射，过于柔和或深沉的颜色会让你失去锐利感。",
     palette: ["#0080E8","#E82060","#A020D8","#00A8D0","#F0F0F8"],
-    hdr: "linear-gradient(135deg,#40a0f0 0%,#a020d8 60%,#e02060 100%)",
-    tc: "#fff",
+    hdr: "linear-gradient(135deg,#40a0f0 0%,#a020d8 60%,#e02060 100%)", tc: "#fff",
     best: ["纯白","宝蓝","正红","亮紫","柠檬黄（冷）","品红"],
     avoid: ["大地色","浑浊暗色","驼棕","橄榄色"],
-    makeup: { lip:"正红·品红", blush:"冷粉腮红", shadow:"冰蓝·亮紫", base:"冷调亮泽粉底" },
-    celebs: ["Wonyoung (IVE)","BLACKPINK LISA","金泰妍（冷调造型）"],
-    dim: {cool:6, clear:8, deep:2, light:3, warm:0, soft:0}
+    celebs: ["IVE 张元英","BLACKPINK LISA","金泰妍（冷调造型）","BTS 柾国（清透造型）"],
+    dim: {cool:6, clear:8, deep:2, light:3, warm:0, soft:0},
+    outfit: {
+      style: "高饱和对比色 / 清透运动感 / 先锋视觉系",
+      top: "纯白T恤、宝蓝色卫衣、品红色针织",
+      bottom: "冰白色宽腿裤、深宝蓝牛仔、黑白对比色系",
+      outer: "纯白西装、宝蓝色运动外套、黑白拼接外套",
+      acc: "银色光泽感首饰、冰白或宝蓝包包、冷色系运动鞋",
+      avoid: "一切低饱和度浑浊色 / 驼色·大地棕 / 过深的哑光暗色系",
+      tip: "亮冬是最适合「高饱和冷色撞色」的类型，宝蓝＋白＋黑的三色组合是核心。可以大胆尝试品红、电光蓝等高饱和色，颜色越纯正越有气场。低饱和度或哑光浑浊的颜色会让你「消失」。"
+    },
+    beauty: {
+      base: "冷调亮泽粉底，追求光感清透；可叠加提亮液增加光泽",
+      blush: "冷粉或冷玫瑰色腮红，轻薄自然；打在颧骨偏高处",
+      eye: "冰蓝、亮紫、银色眼影；可使用珠光或金属质地",
+      lip: "正红（冷调）、品红、亮玫红；缎光或水光质地加分",
+      tip: "亮冬是最适合「光感妆容」的类型，珠光和金属质感在这个类型上不会显得俗气，反而增强清透锐利感。「水光底妆＋正红唇色」是经典搭配，简单却极具冲击力。"
+    }
   },
 };
 
@@ -1078,6 +1342,8 @@ function showResult() {
 
   const key = calcType(scores);
   const r = TYPES[key];
+  const o = r.outfit;
+  const b = r.beauty;
 
   const total = Object.values(scores).reduce((a,b)=>a+b,0)||1;
   const pct = k => Math.round(scores[k]/total*100);
@@ -1086,16 +1352,11 @@ function showResult() {
     `<div class="r-pal-swatch" style="background:${c}"></div>`
   ).join('');
 
-  const mkHtml = Object.entries(r.makeup).map(([k,v]) => {
-    const labels = {lip:'唇妆',blush:'腮红',shadow:'眼影',base:'粉底'};
-    return `<div class="makeup-item"><div class="makeup-cat">${labels[k]||k}</div><div class="makeup-val">${v}</div></div>`;
-  }).join('');
-
   const dims = [
     {k:'warm',label:'暖调',color:'#c8703a'},
     {k:'cool',label:'冷调',color:'#6888c0'},
     {k:'light',label:'浅调',color:'#c8b888'},
-    {k:'deep',label:'深调',color:'#3a3028'},
+    {k:'deep',label:'深调',color:'#504030'},
     {k:'clear',label:'清澈',color:'#60a8c0'},
     {k:'soft',label:'柔雾',color:'#9880a0'},
   ];
@@ -1103,10 +1364,72 @@ function showResult() {
     const v = pct(d.k);
     return `<div class="score-row">
       <div class="score-label">${d.label}</div>
-      <div class="score-track"><div class="score-bar-fill" style="width:${v}%;background:${d.color}" id="bar_${d.k}"></div></div>
+      <div class="score-track"><div class="score-bar-fill" style="width:${v}%;background:${d.color}"></div></div>
       <div class="score-val">${v}%</div>
     </div>`;
   }).join('');
+
+  // TAB 1: 色彩
+  const tab1 = `
+    <div class="r-section">
+      <div class="r-sec-title">色彩维度分析</div>
+      <div class="score-detail">${dimHtml}</div>
+    </div>
+    <div class="r-section">
+      <div class="r-sec-title">推荐色彩</div>
+      <div class="r-tags">${r.best.map(t=>`<div class="r-tag good">${t}</div>`).join('')}</div>
+    </div>
+    <div class="r-section">
+      <div class="r-sec-title">建议避开</div>
+      <div class="r-tags">${r.avoid.map(t=>`<div class="r-tag bad">${t}</div>`).join('')}</div>
+    </div>
+    <div class="r-section">
+      <div class="r-sec-title">同类型参考</div>
+      <div class="celeb-list">${r.celebs.map(c=>`<div class="celeb">✦ ${c}</div>`).join('')}</div>
+    </div>
+  `;
+
+  // TAB 2: 穿搭
+  const outfitItems = [
+    {k:'style', label:'风格方向'},
+    {k:'top',   label:'上装'},
+    {k:'bottom',label:'下装'},
+    {k:'outer', label:'外套'},
+    {k:'acc',   label:'配饰'},
+    {k:'avoid', label:'造型误区'},
+  ];
+  const tab2 = `
+    <div class="outfit-grid">
+      ${outfitItems.map(i=>`
+        <div class="outfit-item" style="${i.k==='style'||i.k==='avoid'?'grid-column:1/-1':''}">
+          <div class="outfit-cat">${i.label}</div>
+          <div class="outfit-val">${o[i.k]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="outfit-note">💡 ${o.tip}</div>
+  `;
+
+  // TAB 3: 美妆
+  const beautyItems = [
+    {k:'base',  label:'底妆'},
+    {k:'blush', label:'腮红'},
+    {k:'eye',   label:'眼妆'},
+    {k:'lip',   label:'唇色'},
+  ];
+  const tab3 = `
+    <div class="beauty-block">
+      <div class="beauty-grid">
+        ${beautyItems.map(i=>`
+          <div class="beauty-item">
+            <div class="beauty-cat">${i.label}</div>
+            <div class="beauty-val">${b[i.k]}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="beauty-note">💡 ${b.tip}</div>
+    </div>
+  `;
 
   rw.innerHTML = `
     <div class="result-header" style="width:100%">
@@ -1127,30 +1450,15 @@ function showResult() {
     <div class="result-body" style="width:100%">
       <p class="r-desc">${r.desc}</p>
 
-      <div class="r-section">
-        <div class="r-sec-title">色彩维度分析</div>
-        <div class="score-detail">${dimHtml}</div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(0,this)">色彩</button>
+        <button class="tab-btn" onclick="switchTab(1,this)">穿搭</button>
+        <button class="tab-btn" onclick="switchTab(2,this)">美妆</button>
       </div>
 
-      <div class="r-section">
-        <div class="r-sec-title">推荐色彩</div>
-        <div class="r-tags">${r.best.map(t=>`<div class="r-tag good">${t}</div>`).join('')}</div>
-      </div>
-
-      <div class="r-section">
-        <div class="r-sec-title">建议避开</div>
-        <div class="r-tags">${r.avoid.map(t=>`<div class="r-tag bad">${t}</div>`).join('')}</div>
-      </div>
-
-      <div class="r-section">
-        <div class="r-sec-title">妆容建议</div>
-        <div class="makeup-grid">${mkHtml}</div>
-      </div>
-
-      <div class="r-section">
-        <div class="r-sec-title">同类型明星参考</div>
-        <div class="celeb-list">${r.celebs.map(c=>`<div class="celeb">✦ ${c}</div>`).join('')}</div>
-      </div>
+      <div class="tab-panel active" id="tab0">${tab1}</div>
+      <div class="tab-panel" id="tab1">${tab2}</div>
+      <div class="tab-panel" id="tab2">${tab3}</div>
 
       <div class="disclaimer">
         <div class="disclaimer-title">关于本测试</div>
@@ -1160,6 +1468,13 @@ function showResult() {
       <button class="retry-btn" onclick="restart()">重新测试</button>
     </div>
   `;
+}
+
+function switchTab(idx, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab' + idx).classList.add('active');
 }
 
 function restart() {
