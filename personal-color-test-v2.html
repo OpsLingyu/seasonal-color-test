@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>퍼스널컬러 · 12型精细色彩诊断</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e0c0b;
+  --surface: #161412;
+  --surface2: #1e1b18;
+  --border: #2e2a26;
+  --text: #f0ebe4;
+  --text2: #9a9086;
+  --accent: #c8a97e;
+  --accent2: #8a6a45;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 80px;
+}
+
+/* ── INTRO ── */
+.intro {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(200,169,126,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 70%, rgba(100,140,180,0.06) 0%, transparent 70%);
+}
+
+.season-strip {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.season-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+.intro h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 8vw, 64px);
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-align: center;
+  line-height: 1.15;
+  position: relative;
+}
+
+.intro h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.intro-sub {
+  margin-top: 20px;
+  color: var(--text2);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-align: center;
+  line-height: 2;
+  position: relative;
+}
+
+.intro-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 32px 0;
+  max-width: 420px;
+  position: relative;
+}
+
+.intro-tag {
+  padding: 4px 14px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 1px;
+  border-radius: 40px;
+}
+
+.start-btn {
+  position: relative;
+  margin-top: 8px;
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  padding: 14px 48px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.start-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ── QUIZ ── */
+.quiz-wrap {
+  width: 100%;
+  max-width: 540px;
+  padding: 0 20px;
+  display: none;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 0 28px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  position: relative;
+}
+
+.progress-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--accent);
+  transition: width 0.5s ease;
+}
+
+.q-counter {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px 28px 28px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.4s ease forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-tag {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent2);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.q-hint {
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+/* text options */
+.opts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 16px;
+  border: 1px solid var(--border);
+  background: none;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  text-align: left;
+  line-height: 1.6;
+  transition: all 0.2s;
+}
+
+.opt:hover {
+  border-color: var(--accent);
+  background: rgba(200,169,126,0.05);
+  transform: translateX(5px);
+}
+
+.opt-n {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.2s;
+}
+
+.opt:hover .opt-n {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* swatch options */
+.opts-swatch {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+
+.sw-btn {
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.25s;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.sw-btn:hover {
+  border-color: rgba(255,255,255,0.6);
+  transform: scale(1.04);
+}
+
+.sw-color {
+  height: 64px;
+}
+
+.sw-label {
+  background: var(--surface2);
+  border-top: 1px solid var(--border);
+  padding: 7px 8px;
+  font-size: 11px;
+  color: var(--text2);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* compare pair */
+.opts-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pair-btn {
+  border: 1px solid var(--border);
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.pair-btn:hover {
+  border-color: var(--accent);
+  transform: scale(1.03);
+}
+
+.pair-color {
+  height: 80px;
+}
+
+.pair-label {
+  padding: 10px;
+  font-size: 12px;
+  color: var(--text2);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── RESULT ── */
+.result-wrap {
+  width: 100%;
+  max-width: 540px;
+  padding: 0 20px 40px;
+  display: none;
+}
+
+.result-header {
+  margin-top: 40px;
+  padding: 40px 28px 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rh-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+}
+
+.rh-content {
+  position: relative;
+}
+
+.r-season-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.r-type-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.r-type-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  opacity: 0.65;
+  margin-bottom: 20px;
+}
+
+.r-palette {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.r-pal-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.r-score-bar {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+.result-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 28px;
+}
+
+.r-desc {
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.r-section {
+  margin-bottom: 22px;
+}
+
+.r-sec-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent2);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.r-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.r-tag {
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text2);
+  border-radius: 40px;
+}
+
+.r-tag.good {
+  border-color: var(--accent2);
+  color: var(--accent);
+}
+
+.r-tag.bad {
+  border-color: #4a3030;
+  color: #9a7070;
+}
+
+.makeup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.makeup-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+.makeup-cat {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text2);
+  margin-bottom: 5px;
+}
+
+.makeup-val {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.celeb-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.celeb {
+  padding: 5px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.score-detail {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 22px;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.score-row:last-child { margin-bottom: 0; }
+
+.score-label { font-size: 11px; color: var(--text2); width: 50px; }
+
+.score-track {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.score-val { font-size: 11px; color: var(--text2); width: 28px; text-align: right; }
+
+.disclaimer {
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+  padding-top: 22px;
+  margin-bottom: 24px;
+}
+
+.disclaimer-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent2);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.disclaimer p {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.85;
+  margin-bottom: 8px;
+}
+
+.disclaimer p:last-child { margin-bottom: 0; }
+
+.disclaimer strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.retry-btn {
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.retry-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div class="intro" id="introScreen">
+  <div class="intro-bg"></div>
+  <div class="season-strip">
+    <div class="season-dot" style="background:#f4a261"></div>
+    <div class="season-dot" style="background:#f4d58d"></div>
+    <div class="season-dot" style="background:#e76f51"></div>
+    <div class="season-dot" style="background:#b5c6e0"></div>
+    <div class="season-dot" style="background:#9b8dc4"></div>
+    <div class="season-dot" style="background:#c9d6ff"></div>
+    <div class="season-dot" style="background:#c8703a"></div>
+    <div class="season-dot" style="background:#8b6347"></div>
+    <div class="season-dot" style="background:#d4a96a"></div>
+    <div class="season-dot" style="background:#2d3561"></div>
+    <div class="season-dot" style="background:#6c63ff"></div>
+    <div class="season-dot" style="background:#a8b4d0"></div>
+  </div>
+
+  <h1>Personal<br><em>Color</em> Analysis</h1>
+  <p class="intro-sub">퍼스널컬러 정밀 진단 · 12型精细色彩诊断</p>
+
+  <div class="intro-tags">
+    <span class="intro-tag">亮春</span><span class="intro-tag">暖春</span><span class="intro-tag">浅春</span>
+    <span class="intro-tag">浅夏</span><span class="intro-tag">柔夏</span><span class="intro-tag">冷夏</span>
+    <span class="intro-tag">暖秋</span><span class="intro-tag">深秋</span><span class="intro-tag">柔秋</span>
+    <span class="intro-tag">深冬</span><span class="intro-tag">冷冬</span><span class="intro-tag">亮冬</span>
+  </div>
+
+  <button class="start-btn" onclick="startQuiz()">开始诊断</button>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-wrap" id="quizWrap">
+  <div class="top-bar">
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+    <div class="q-counter" id="pLabel">0 / 16</div>
+  </div>
+  <div id="qArea"></div>
+</div>
+
+<!-- RESULT -->
+<div class="result-wrap" id="resultWrap"></div>
+
+<script>
+// ── 评分维度 ──
+// warm / cool  → 暖冷
+// light / deep → 明暗
+// soft / clear → 柔/清
+
+const Q = [
+  // 第一组：暖冷判断
+  {
+    group: "肤色底调",
+    q: "在自然光下，你的皮肤底色更接近？",
+    hint: "尝试对比一张纯白纸，观察皮肤是否泛黄/泛橙（暖）还是泛粉/泛蓝（冷）",
+    type: "text",
+    opts: [
+      { t: "明显偏黄调、象牙色、奶油色", s: {warm:2} },
+      { t: "略带黄调，但不明显", s: {warm:1} },
+      { t: "偏中性，较难判断", s: {} },
+      { t: "略带粉调或浅玫瑰色", s: {cool:1} },
+      { t: "明显偏粉调、泛蓝白感", s: {cool:2} },
+    ]
+  },
+  {
+    group: "肤色底调",
+    q: "太阳照射或运动后，你的皮肤变红的方式？",
+    type: "text",
+    opts: [
+      { t: "不怎么变红，容易晒成金棕/蜜糖色", s: {warm:2, deep:1} },
+      { t: "先变红，慢慢变成暖棕色", s: {warm:1} },
+      { t: "先变红，之后变成冷棕色", s: {cool:1} },
+      { t: "很容易晒红，不容易晒黑，皮肤偏白且稳定", s: {cool:2, light:1} },
+    ]
+  },
+  {
+    group: "肤色底调",
+    q: "以下哪种描述最接近你脸上阴影的颜色？",
+    hint: "比如颧骨下方、下巴侧面的自然阴影",
+    type: "text",
+    opts: [
+      { t: "暖橙棕、桃木色", s: {warm:2} },
+      { t: "暖棕、浅棕", s: {warm:1} },
+      { t: "浅灰粉、浅冷棕", s: {cool:1} },
+      { t: "偏灰蓝、偏冷紫灰", s: {cool:2} },
+    ]
+  },
+
+  // 第二组：明暗判断
+  {
+    group: "对比度",
+    q: "你的肤色与发色/眉色之间的对比程度？",
+    hint: "对比度高=皮肤很白但头发/眉毛很深；对比度低=皮肤与发色比较接近",
+    type: "text",
+    opts: [
+      { t: "对比非常高，皮肤很白、头发/眉毛很深", s: {deep:2, clear:1} },
+      { t: "对比中等偏高", s: {deep:1} },
+      { t: "对比中等", s: {} },
+      { t: "对比较低，整体偏浅", s: {light:1} },
+      { t: "对比很低，皮肤和发色都偏浅", s: {light:2, soft:1} },
+    ]
+  },
+  {
+    group: "发色",
+    q: "你的天然发色？",
+    type: "text",
+    opts: [
+      { t: "浅棕、亚麻棕（偏暖浅）", s: {warm:1, light:2} },
+      { t: "暖棕、红棕、栗子棕", s: {warm:2} },
+      { t: "深棕、深暖棕", s: {warm:1, deep:1} },
+      { t: "冷棕、灰棕、中性棕", s: {cool:1, soft:1} },
+      { t: "深黑、蓝黑（有冷光泽）", s: {cool:2, deep:2} },
+      { t: "偏黄或金色调（暖浅）", s: {warm:2, light:2} },
+    ]
+  },
+  {
+    group: "眼睛",
+    q: "你的眼睛颜色（瞳孔）？",
+    type: "text",
+    opts: [
+      { t: "浅蜂蜜棕、浅榛子色（明亮感强）", s: {warm:1, light:2, clear:1} },
+      { t: "暖棕、金棕", s: {warm:2} },
+      { t: "深棕、暖深棕", s: {warm:1, deep:1} },
+      { t: "冷棕、灰棕、茶棕", s: {cool:1, soft:1} },
+      { t: "深黑，眼神清澈锐利", s: {cool:1, deep:2, clear:2} },
+      { t: "非常深的黑，沉稳", s: {deep:2} },
+    ]
+  },
+
+  // 第三组：柔/清判断
+  {
+    group: "整体印象",
+    q: "不化妆时，别人对你气质的描述更接近？",
+    type: "text",
+    opts: [
+      { t: "清透、干净，像去掉杂质的纯净感", s: {clear:2} },
+      { t: "通透、亮眼，有自然光泽", s: {clear:1, light:1} },
+      { t: "柔和、雾感，略带朦胧感", s: {soft:2} },
+      { t: "温柔、自然，不突出也不暗沉", s: {soft:1} },
+      { t: "沉稳、成熟，有分量感", s: {deep:1} },
+    ]
+  },
+  {
+    group: "色彩感知",
+    q: "穿这几种色调，哪种让气色最好看？",
+    type: "swatch",
+    opts: [
+      { t: "亮珊瑚橙", bg: "#FF7B54", s: {warm:2, clear:1} },
+      { t: "雾感玫瑰粉", bg: "#C4869B", s: {cool:1, soft:2} },
+      { t: "暖大地棕", bg: "#A0522D", s: {warm:2, deep:1} },
+      { t: "冷薰衣草", bg: "#9B8EC4", s: {cool:2, soft:1} },
+      { t: "纯正宝蓝", bg: "#1B4F9E", s: {cool:2, clear:2} },
+      { t: "暖柠檬黄", bg: "#E8C84A", s: {warm:1, light:2, clear:1} },
+    ]
+  },
+  {
+    group: "色彩感知",
+    q: "哪种白色系穿在身上感觉最和谐？",
+    type: "pair",
+    opts: [
+      { t: "象牙白\n奶油白", bg: "#EDE0C4", s: {warm:2}, tc: "#6b5a40" },
+      { t: "纯白\n冷调白", bg: "#F2F2F7", s: {cool:2}, tc: "#5a5a70" },
+    ]
+  },
+  {
+    group: "色彩感知",
+    q: "以下哪个色系让你的气色看起来最提气？",
+    type: "swatch",
+    opts: [
+      { t: "亮春系\n鲜活橙粉", bg: "#F4845F", s: {warm:2, light:1, clear:2} },
+      { t: "柔夏系\n雾感莫兰迪", bg: "#B59BAB", s: {cool:1, soft:2} },
+      { t: "暖秋系\n复古砖红", bg: "#9E4A2E", s: {warm:2, deep:2} },
+      { t: "冷冬系\n清澈正色", bg: "#2C5F8A", s: {cool:2, clear:2, deep:1} },
+    ]
+  },
+
+  // 第四组：细分维度
+  {
+    group: "金属感知",
+    q: "戴哪种金属色首饰，皮肤看起来最有光泽？",
+    type: "pair",
+    opts: [
+      { t: "黄金 · 玫瑰金", bg: "#C9A227", s: {warm:2}, tc: "#fff" },
+      { t: "银色 · 白金", bg: "#9BA4B4", s: {cool:2}, tc: "#fff" },
+    ]
+  },
+  {
+    group: "颜色饱和度",
+    q: "以下哪类颜色穿在身上最不显脏？",
+    type: "swatch",
+    opts: [
+      { t: "鲜艳明亮色\n（高饱和）", bg: "#E8402A", s: {clear:2} },
+      { t: "莫兰迪色\n（低饱和哑光）", bg: "#A89090", s: {soft:2} },
+      { t: "大地棕暖色\n（中饱和暖调）", bg: "#B0703A", s: {warm:2} },
+      { t: "深邃暗色\n（低明度冷调）", bg: "#2A2A4A", s: {cool:1, deep:2} },
+    ]
+  },
+  {
+    group: "明度感知",
+    q: "整体看，你更适合亮色系还是深色系？",
+    type: "pair",
+    opts: [
+      { t: "浅色·亮色\n粉嫩明亮系", bg: "#F7D5C8", s: {light:2}, tc: "#7a5a50" },
+      { t: "深色·暗色\n沉稳深邃系", bg: "#2A2520", s: {deep:2}, tc: "#c8b8a0" },
+    ]
+  },
+  {
+    group: "妆感感知",
+    q: "以下哪种唇妆颜色最衬你的肤色？",
+    type: "swatch",
+    opts: [
+      { t: "珊瑚橙红\n（暖·亮）", bg: "#E8604A", s: {warm:2, clear:1} },
+      { t: "豆沙裸粉\n（暖·柔）", bg: "#C4937A", s: {warm:1, soft:1} },
+      { t: "玫瑰粉\n（冷·柔）", bg: "#D4708A", s: {cool:1, soft:2} },
+      { t: "正红·深枣红\n（冷·清）", bg: "#A01830", s: {cool:2, clear:1, deep:1} },
+    ]
+  },
+  {
+    group: "整体气质",
+    q: "最能代表你日常气质的词？",
+    type: "text",
+    opts: [
+      { t: "明亮·活力·阳光感强", s: {light:2, clear:1, warm:1} },
+      { t: "温柔·文艺·有雾感", s: {soft:2, cool:1} },
+      { t: "清透·精致·线条感强", s: {clear:2, cool:1} },
+      { t: "沉稳·复古·有分量", s: {deep:2, warm:1} },
+      { t: "知性·冷淡·高级感", s: {deep:1, cool:2, clear:1} },
+    ]
+  },
+  {
+    group: "色彩感知",
+    q: "以下哪组颜色搭在一起，你觉得最和谐好看？",
+    type: "swatch",
+    opts: [
+      { t: "杏色＋珊瑚＋草绿", bg: "linear-gradient(135deg,#F4C5A0 33%,#F4845F 66%,#7FAF6A 100%)", s: {warm:2, light:1} },
+      { t: "薰衣草＋哑粉＋灰蓝", bg: "linear-gradient(135deg,#C4AEDE 33%,#E0B8BE 66%,#9EB4CC 100%)", s: {cool:2, soft:2} },
+      { t: "砖红＋芥末＋棕褐", bg: "linear-gradient(135deg,#C04A30 33%,#C8A030 66%,#8B5A30 100%)", s: {warm:2, deep:2} },
+      { t: "纯白＋正黑＋宝蓝", bg: "linear-gradient(135deg,#F0F0F0 33%,#1A1A1A 66%,#1B4F9E 100%)", s: {cool:2, clear:2, deep:1} },
+    ]
+  },
+];
+
+// ── 12型结果定义 ──
+const TYPES = {
+  spring_clear: {
+    name: "亮春型",
+    en: "Bright Spring",
+    ko: "봄 비비드",
+    desc: "你是最明亮活力的暖调代表！肤色清透有光泽，发色与肤色形成适中对比，整体散发干净而充满活力的氛围。高饱和度的鲜艳暖色调最能激活你的气色，让你看起来光彩照人、精力充沛。避免沉闷的暗色或过度柔和的粉调色彩。",
+    palette: ["#FF8C42","#F4C842","#7BC67E","#F4845F","#FFD166"],
+    hdr: "linear-gradient(135deg,#f9c06a 0%,#f4845f 60%,#e8402a 100%)",
+    tc: "#fff",
+    best: ["珊瑚橙","暖柠黄","苹果绿","桃粉","象牙白","暖红"],
+    avoid: ["冷灰紫","暗酒红","黑色","冰蓝"],
+    makeup: { lip:"珊瑚橙·暖红", blush:"橙色腮红", shadow:"暖棕·珊瑚", base:"象牙粉底" },
+    celebs: ["IU (早期)","朴彩英","蔡徐坤"],
+    dim: {warm:7, light:4, clear:5, soft:1, cool:0, deep:1}
+  },
+  spring_warm: {
+    name: "暖春型",
+    en: "Warm Spring",
+    ko: "봄 라이트웜",
+    desc: "你是最纯粹的暖调型，皮肤、发色、眼睛都透着温暖而自然的光泽。暖调的中等明度色彩最适合你，尤其是带有橙调、棕调的自然色系，能让你呈现出健康明媚的气质。过于鲜艳或过于清冷的颜色都会让你显得不够精神。",
+    palette: ["#E8A87C","#C8703A","#D4A96A","#E8C84A","#F4845F"],
+    hdr: "linear-gradient(135deg,#e8c06a 0%,#c8703a 60%,#a05020 100%)",
+    tc: "#fff",
+    best: ["驼色","南瓜橙","暖棕","芥末黄","杏色","珊瑚橙"],
+    avoid: ["冷粉","冷紫","冰白","深海军蓝"],
+    makeup: { lip:"暖橙棕·裸橙", blush:"橙棕腮红", shadow:"暖大地色", base:"象牙/暖调粉底" },
+    celebs: ["全智贤","Lisa (某些造型)","Stella Jang"],
+    dim: {warm:8, light:3, clear:3, soft:2, cool:0, deep:2}
+  },
+  spring_light: {
+    name: "浅春型",
+    en: "Light Spring",
+    ko: "봄 라이트",
+    desc: "你是春季中最轻盈柔和的类型，肤色白皙明亮，发色较浅，整体气质甜美清新。浅暖调的柔和颜色最适合你，颜色饱和度不宜太高，粉嫩的暖调最能衬托你白里透红的肤色。深色和浓艳色会使你显得疲惫或突兀。",
+    palette: ["#FFD6B8","#F9C0A8","#FADC8C","#A8D8A8","#F9D0B0"],
+    hdr: "linear-gradient(135deg,#fce4c8 0%,#f9c0a8 60%,#f4a080 100%)",
+    tc: "#7a4a30",
+    best: ["蜜桃粉","浅杏色","嫩鹅黄","浅草绿","米白","粉橙"],
+    avoid: ["浓重大地棕","黑色","深枣红","冷灰"],
+    makeup: { lip:"蜜桃粉·浅珊瑚", blush:"蜜桃腮红", shadow:"浅暖棕·粉橙", base:"浅象牙粉底" },
+    celebs: ["金泰妍","少女时代时期造型","OH MY GIRL ARIN"],
+    dim: {warm:5, light:7, clear:2, soft:3, cool:0, deep:0}
+  },
+  summer_light: {
+    name: "浅夏型",
+    en: "Light Summer",
+    ko: "여름 라이트",
+    desc: "你是夏季中最清浅的类型，皮肤白皙细腻，发色较浅，整体呈现出清透柔和的气质。浅冷调或中性浅色调最适合你，颜色不宜太深或太浓艳，粉雾感的浅色系能让你看起来格外清新脱俗，深色和浓郁色会让你显得憔悴。",
+    palette: ["#E8D5E8","#D4C0D8","#B8D0E0","#C8D8E8","#E0D0E8"],
+    hdr: "linear-gradient(135deg,#e8d8f0 0%,#c8d0e8 60%,#a8b8d8 100%)",
+    tc: "#3a3050",
+    best: ["淡粉紫","浅薰衣草","粉蓝灰","浅雾灰","樱花粉","轻柔白"],
+    avoid: ["橙色","暖黄","深棕","纯黑"],
+    makeup: { lip:"裸粉·浅玫瑰", blush:"粉色腮红", shadow:"浅紫灰·裸粉", base:"冷调浅粉底" },
+    celebs: ["BLACKPINK JISOO","宋慧乔（素颜感）","金智秀"],
+    dim: {cool:5, light:7, soft:4, clear:1, warm:0, deep:0}
+  },
+  summer_soft: {
+    name: "柔夏型",
+    en: "Soft Summer",
+    ko: "여름 뮤트",
+    desc: "你是最典型的莫兰迪色系代言人，皮肤底色偏冷，整体气质柔雾、朦胧、文艺。低饱和度的灰调冷色系最适合你，任何颜色加入一点「灰」都能让你焕发独特的知性美，避免高饱和度的鲜艳色，那会让你显得气色差。",
+    palette: ["#B8A8B8","#A89898","#9898A8","#B8A898","#A8A8B8"],
+    hdr: "linear-gradient(135deg,#c8b8c8 0%,#a8a0b8 60%,#9090a8 100%)",
+    tc: "#fff",
+    best: ["莫兰迪粉","雾蓝灰","哑灰紫","浅玫灰","灰绿","灰蓝"],
+    avoid: ["荧光色","纯橙","亮黄","鲜艳正红"],
+    makeup: { lip:"豆沙裸粉·玫瑰棕", blush:"玫瑰灰腮红", shadow:"紫灰·冷棕", base:"自然冷调粉底" },
+    celebs: ["裴秀智","IU（近年成熟风）","孙艺珍"],
+    dim: {cool:5, soft:7, light:3, clear:0, warm:0, deep:2}
+  },
+  summer_cool: {
+    name: "冷夏型",
+    en: "Cool Summer",
+    ko: "여름 쿨",
+    desc: "你是夏季中冷调最纯粹的类型，皮肤底色偏冷且有一定清透感，气质清冷、知性、略带距离感。纯正的冷调中高饱和度色彩最能体现你的气质，尤其是蓝紫系、冷粉系，颜色比柔夏更清晰有轮廓。避免暖调色彩，那会让你显得暗沉。",
+    palette: ["#8FA8C8","#9888C0","#C888A8","#7898C8","#A888B8"],
+    hdr: "linear-gradient(135deg,#a8c0e0 0%,#9888c0 60%,#7868a8 100%)",
+    tc: "#fff",
+    best: ["冰蓝","玫瑰紫","冷粉","薄荷绿","冷白","中蓝"],
+    avoid: ["橙色","驼色","暖棕","芥末黄"],
+    makeup: { lip:"冷粉·玫瑰红", blush:"冷玫瑰腮红", shadow:"冷紫·冰蓝灰", base:"冷调粉底" },
+    celebs: ["金智妮（BLACKPINK）","TWICE 娜琏","Karina"],
+    dim: {cool:7, soft:3, clear:4, light:2, warm:0, deep:2}
+  },
+  autumn_warm: {
+    name: "暖秋型",
+    en: "Warm Autumn",
+    ko: "가을 웜",
+    desc: "你是最纯粹的秋日暖调型，皮肤底色暖而饱满，整体气质温暖、自然、成熟。中等饱和度的暖调大地色系最适合你，橙棕、砖红、芥末黄都是你的主场，穿上这些颜色你会呈现出温润优雅的气质，过于清冷或过于明亮的颜色会让你显得突兀。",
+    palette: ["#C8703A","#B8502A","#D4A050","#8A6030","#C04830"],
+    hdr: "linear-gradient(135deg,#d4a050 0%,#c8703a 60%,#a04020 100%)",
+    tc: "#fff",
+    best: ["砖红","芥末黄","深橙","暖棕","橄榄绿","驼色"],
+    avoid: ["冷粉","冷紫","冰蓝","亮白"],
+    makeup: { lip:"暖橙棕·砖红", blush:"橙棕腮红", shadow:"大地暖棕", base:"暖调粉底" },
+    celebs: ["全智贤","朴信惠","Son Ye-jin"],
+    dim: {warm:8, deep:4, soft:3, clear:0, cool:0, light:1}
+  },
+  autumn_deep: {
+    name: "深秋型",
+    en: "Deep Autumn",
+    ko: "가을 딥",
+    desc: "你是秋季中最深邃、最有分量感的类型，肤色偏深暖，发色深棕，整体气质沉稳、神秘、极具存在感。深暖色调是你的强项，深棕、深酒红、暗橄榄绿都能让你展现出令人印象深刻的气场，浅色和冷色都会让你显得无精打采。",
+    palette: ["#6B3010","#8B4020","#A05828","#503020","#7A3838"],
+    hdr: "linear-gradient(135deg,#a05828 0%,#6b3010 60%,#402010 100%)",
+    tc: "#f0d0b0",
+    best: ["深棕","暗酒红","深橄榄","墨绿","咖啡棕","深砖红"],
+    avoid: ["浅粉","冷紫","亮白","荧光色"],
+    makeup: { lip:"深枣红·暗橙棕", blush:"深棕腮红", shadow:"深棕·暗铜", base:"深暖调粉底" },
+    celebs: ["Han Ye-seul","金泰嬉","某些造型的崔智宇"],
+    dim: {warm:7, deep:8, soft:2, clear:0, cool:0, light:0}
+  },
+  autumn_soft: {
+    name: "柔秋型",
+    en: "Soft Autumn",
+    ko: "가을 뮤트",
+    desc: "你是秋日里最柔和朦胧的类型，皮肤暖调但略带雾感，气质温柔、复古、低调优雅。哑光低饱和度的暖调色彩是你的专属，尤其是带有灰调的暖色，如暖杏灰、浅棕、暖橄榄，能展现你独特的复古文艺气质，避免高饱和鲜艳色。",
+    palette: ["#C4A080","#A88868","#B89878","#9A8060","#C8B090"],
+    hdr: "linear-gradient(135deg,#c8b090 0%,#a88060 60%,#806040 100%)",
+    tc: "#fff",
+    best: ["杏色","暖米","浅棕","暖橄榄","驼色","暖灰"],
+    avoid: ["荧光色","冷紫","亮白","纯黑"],
+    makeup: { lip:"裸橙·暖杏棕", blush:"暖裸色腮红", shadow:"浅暖棕·哑光金", base:"中暖调粉底" },
+    celebs: ["Song Hye-kyo（暖调造型）","韩素希","朴敏英"],
+    dim: {warm:6, soft:6, deep:2, clear:0, cool:0, light:2}
+  },
+  winter_deep: {
+    name: "深冬型",
+    en: "Deep Winter",
+    ko: "겨울 딥",
+    desc: "你是最深邃凌厉的冬季型，皮肤白皙或中性但对比度极高，眼神深邃清晰，整体气场强大。深而纯正的冷色调最适合你，纯黑、深海军蓝、深紫、酒红都是你的主场，能最大化你的气场与高级感，浅色和暖色会使你失去光彩。",
+    palette: ["#1A1A2E","#2D3561","#4A1028","#1A3060","#0A0A18"],
+    hdr: "linear-gradient(135deg,#2d3561 0%,#1a1a2e 60%,#0a0a18 100%)",
+    tc: "#c0c8e8",
+    best: ["纯黑","深海军蓝","深紫","酒红","深宝蓝","炭灰"],
+    avoid: ["米白","橙色","大地棕","粉嫩色"],
+    makeup: { lip:"深枣红·勃艮第", blush:"少量深玫瑰", shadow:"深灰·黑棕", base:"冷调粉底" },
+    celebs: ["BLACKPINK JENNIE","张元英","金智妮（深色造型）"],
+    dim: {cool:7, deep:8, clear:4, soft:0, warm:0, light:0}
+  },
+  winter_cool: {
+    name: "冷冬型",
+    en: "Cool Winter",
+    ko: "겨울 쿨",
+    desc: "你是最纯粹的冷调代表，皮肤底色偏冷，气质清冷、精致、高级。纯正冷调色彩是你的主场，蓝、紫、粉，甚至黑白对比，都能让你散发无懈可击的气场。所有暖调颜色都会让你显得暗沉无光，是需要最严格回避暖色的类型。",
+    palette: ["#3A60A8","#6850A8","#2A4878","#A83060","#485090"],
+    hdr: "linear-gradient(135deg,#6050a8 0%,#3a4898 60%,#2030a8 100%)",
+    tc: "#fff",
+    best: ["宝蓝","冷紫","冰白","冷红","银灰","冷黑"],
+    avoid: ["一切橙色","驼色","芥末黄","大地棕"],
+    makeup: { lip:"正红·冷玫红", blush:"冷玫瑰腮红", shadow:"冰蓝·冷紫灰", base:"冷调白皙粉底" },
+    celebs: ["Karina (aespa)","TWICE 娜琏","IVE 张元英"],
+    dim: {cool:8, clear:5, deep:3, soft:1, warm:0, light:2}
+  },
+  winter_bright: {
+    name: "亮冬型",
+    en: "Bright Winter",
+    ko: "겨울 비비드",
+    desc: "你是冬季中明度最高、最有光泽感的类型，皮肤偏白且清透，眼神清晰明亮，整体散发出一种干净而锐利的光彩。高饱和度的纯正冷色最能激活你，纯白·宝蓝·正红·亮紫等颜色让你看起来光芒四射，过于柔和或深沉的颜色会让你失去锐利感。",
+    palette: ["#0080E8","#E82060","#A020D8","#00A8D0","#F0F0F8"],
+    hdr: "linear-gradient(135deg,#40a0f0 0%,#a020d8 60%,#e02060 100%)",
+    tc: "#fff",
+    best: ["纯白","宝蓝","正红","亮紫","柠檬黄（冷）","品红"],
+    avoid: ["大地色","浑浊暗色","驼棕","橄榄色"],
+    makeup: { lip:"正红·品红", blush:"冷粉腮红", shadow:"冰蓝·亮紫", base:"冷调亮泽粉底" },
+    celebs: ["Wonyoung (IVE)","BLACKPINK LISA","金泰妍（冷调造型）"],
+    dim: {cool:6, clear:8, deep:2, light:3, warm:0, soft:0}
+  },
+};
+
+// ── 判断逻辑 ──
+function calcType(sc) {
+  const isWarm = sc.warm >= sc.cool;
+  const isDeep = sc.deep >= sc.light;
+  const isClear = sc.clear >= sc.soft;
+  const warmGap = Math.abs(sc.warm - sc.cool);
+  const depthGap = Math.abs(sc.deep - sc.light);
+  const clrGap = Math.abs(sc.clear - sc.soft);
+
+  if (isWarm) {
+    if (isDeep) {
+      return depthGap > 3 ? 'autumn_deep' : (isClear ? 'autumn_warm' : 'autumn_soft');
+    } else {
+      return clrGap > 2 ? (isClear ? 'spring_clear' : 'spring_light') : 'spring_warm';
+    }
+  } else {
+    if (isDeep) {
+      return depthGap > 3 ? 'winter_deep' : (isClear ? 'winter_cool' : 'winter_bright');
+    } else {
+      return clrGap > 2 ? (isClear ? 'summer_cool' : 'summer_light') : 'summer_soft';
+    }
+  }
+}
+
+// ── State ──
+let scores = {warm:0,cool:0,light:0,deep:0,clear:0,soft:0};
+let cur = 0;
+
+function startQuiz() {
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('quizWrap').style.display = 'flex';
+  document.getElementById('quizWrap').style.flexDirection = 'column';
+  document.getElementById('quizWrap').style.alignItems = 'center';
+  renderQ();
+}
+
+function renderQ() {
+  const pct = cur / Q.length * 100;
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pLabel').textContent = cur + ' / ' + Q.length;
+
+  if (cur >= Q.length) { showResult(); return; }
+
+  const q = Q[cur];
+  let inner = '';
+
+  if (q.type === 'text') {
+    inner = '<div class="opts-list">' + q.opts.map((o,i) =>
+      `<button class="opt" onclick="pick(${i})"><span class="opt-n">${i+1}</span>${o.t}</button>`
+    ).join('') + '</div>';
+  } else if (q.type === 'swatch') {
+    inner = '<div class="opts-swatch">' + q.opts.map((o,i) =>
+      `<button class="sw-btn" onclick="pick(${i})">
+        <div class="sw-color" style="background:${o.bg}"></div>
+        <div class="sw-label">${o.t.replace('\n','<br>')}</div>
+      </button>`
+    ).join('') + '</div>';
+  } else if (q.type === 'pair') {
+    inner = '<div class="opts-pair">' + q.opts.map((o,i) =>
+      `<button class="pair-btn" onclick="pick(${i})">
+        <div class="pair-color" style="background:${o.bg}"></div>
+        <div class="pair-label" style="color:${q.opts[i].tc||'var(--text2)'}">${o.t.replace('\n','<br>')}</div>
+      </button>`
+    ).join('') + '</div>';
+  }
+
+  document.getElementById('qArea').innerHTML = `
+    <div class="q-card">
+      <div class="q-tag">${q.group} &nbsp;·&nbsp; Q${String(cur+1).padStart(2,'0')}</div>
+      <div class="q-text">${q.q}</div>
+      ${q.hint ? `<div class="q-hint">💡 ${q.hint}</div>` : ''}
+      ${inner}
+    </div>
+  `;
+}
+
+function pick(idx) {
+  const s = Q[cur].opts[idx].s;
+  for (const k in s) { if (scores[k] !== undefined) scores[k] += s[k]; }
+
+  const area = document.getElementById('qArea');
+  area.style.opacity = '0';
+  area.style.transform = 'translateX(-12px)';
+  area.style.transition = 'all 0.18s ease';
+
+  setTimeout(() => {
+    area.style.transition = 'none';
+    area.style.opacity = '1';
+    area.style.transform = 'none';
+    cur++;
+    renderQ();
+  }, 180);
+}
+
+function showResult() {
+  document.getElementById('quizWrap').style.display = 'none';
+  const rw = document.getElementById('resultWrap');
+  rw.style.display = 'flex';
+  rw.style.flexDirection = 'column';
+  rw.style.alignItems = 'center';
+
+  const key = calcType(scores);
+  const r = TYPES[key];
+
+  const total = Object.values(scores).reduce((a,b)=>a+b,0)||1;
+  const pct = k => Math.round(scores[k]/total*100);
+
+  const palHtml = r.palette.map(c =>
+    `<div class="r-pal-swatch" style="background:${c}"></div>`
+  ).join('');
+
+  const mkHtml = Object.entries(r.makeup).map(([k,v]) => {
+    const labels = {lip:'唇妆',blush:'腮红',shadow:'眼影',base:'粉底'};
+    return `<div class="makeup-item"><div class="makeup-cat">${labels[k]||k}</div><div class="makeup-val">${v}</div></div>`;
+  }).join('');
+
+  const dims = [
+    {k:'warm',label:'暖调',color:'#c8703a'},
+    {k:'cool',label:'冷调',color:'#6888c0'},
+    {k:'light',label:'浅调',color:'#c8b888'},
+    {k:'deep',label:'深调',color:'#3a3028'},
+    {k:'clear',label:'清澈',color:'#60a8c0'},
+    {k:'soft',label:'柔雾',color:'#9880a0'},
+  ];
+  const dimHtml = dims.map(d => {
+    const v = pct(d.k);
+    return `<div class="score-row">
+      <div class="score-label">${d.label}</div>
+      <div class="score-track"><div class="score-bar-fill" style="width:${v}%;background:${d.color}" id="bar_${d.k}"></div></div>
+      <div class="score-val">${v}%</div>
+    </div>`;
+  }).join('');
+
+  rw.innerHTML = `
+    <div class="result-header" style="width:100%">
+      <div class="rh-bg" style="background:${r.hdr}"></div>
+      <div class="rh-content" style="color:${r.tc}">
+        <div class="r-season-label">퍼스널컬러 · PERSONAL COLOR</div>
+        <div class="r-type-name">${r.name}</div>
+        <div class="r-type-en">${r.en} · ${r.ko}</div>
+        <div class="r-palette">${palHtml}</div>
+        <div class="r-score-bar">
+          <span>暖调 ${scores.warm}pt</span>
+          <span>冷调 ${scores.cool}pt</span>
+          <span>深调 ${scores.deep}pt</span>
+          <span>浅调 ${scores.light}pt</span>
+        </div>
+      </div>
+    </div>
+    <div class="result-body" style="width:100%">
+      <p class="r-desc">${r.desc}</p>
+
+      <div class="r-section">
+        <div class="r-sec-title">色彩维度分析</div>
+        <div class="score-detail">${dimHtml}</div>
+      </div>
+
+      <div class="r-section">
+        <div class="r-sec-title">推荐色彩</div>
+        <div class="r-tags">${r.best.map(t=>`<div class="r-tag good">${t}</div>`).join('')}</div>
+      </div>
+
+      <div class="r-section">
+        <div class="r-sec-title">建议避开</div>
+        <div class="r-tags">${r.avoid.map(t=>`<div class="r-tag bad">${t}</div>`).join('')}</div>
+      </div>
+
+      <div class="r-section">
+        <div class="r-sec-title">妆容建议</div>
+        <div class="makeup-grid">${mkHtml}</div>
+      </div>
+
+      <div class="r-section">
+        <div class="r-sec-title">同类型明星参考</div>
+        <div class="celeb-list">${r.celebs.map(c=>`<div class="celeb">✦ ${c}</div>`).join('')}</div>
+      </div>
+
+      <div class="disclaimer">
+        <div class="disclaimer-title">关于本测试</div>
+        <p>本测试基于 <strong>四季色彩理论（Seasonal Color Analysis）</strong>及视觉感知原理。该理论源自色彩顾问 Carole Jackson 1980 年代的研究，后经日韩美妆行业系统细化为 12 型体系。皮肤、发色、眼睛的暖冷倾向由黑色素比例决定，属客观存在；颜色搭配影响肤色观感，亦有色彩心理学与视觉对比研究支撑。</p>
+        <p>然而，12 型细分目前尚无同行评审的学术研究背书，线上问卷也存在主观感知误差。<strong>本结果仅供参考与娱乐，不构成专业建议。</strong>如需精准诊断，建议咨询专业色彩顾问进行线下布料比对（드레이핑）。</p>
+      </div>
+      <button class="retry-btn" onclick="restart()">重新测试</button>
+    </div>
+  `;
+}
+
+function restart() {
+  scores = {warm:0,cool:0,light:0,deep:0,clear:0,soft:0};
+  cur = 0;
+  document.getElementById('resultWrap').style.display = 'none';
+  document.getElementById('introScreen').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
